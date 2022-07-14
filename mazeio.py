@@ -6,9 +6,7 @@ from stores import MazeTypes, MAZE_COLORS
 from colorsys import hsv_to_rgb
 
 def load_maze(filename: str):
-    '''
-    Loads a maze from a given image file, along with its
-    '''
+    """Loads a maze from a given image file, returns a MazeData object"""
     image_data = Image.open(filename)
     size = ((d:= image_data.getbbox())[2], d[3])
 
@@ -24,26 +22,13 @@ def load_maze(filename: str):
 
     return MazeData(maze_data, size)
 
-def display_all_searched_maze(maze:MazeData, stack:Collection = None):
-    if stack is not None: stack_coords = set([s.positoin for s in stack])
-    img = Image.new("RGB", maze.size, (255,255,255))
-
-    for x in range(maze.size[0]):
-        for y in range(maze.size[1]):
-            if stack is not None:
-                if (x, y) in stack_coords: 
-                    img.putpixel((x,y), MAZE_COLORS['being_searched'])
-            else:
-                img.putpixel((x,y), MAZE_COLORS[maze[(x, y)]])
-
-    img.show()
-
 def create_solved_maze_image(maze: MazeData, solve_path: list, hue_speed:float = 0.0001):
+    """Given a solved maze and its solution path, creates a PIL image file"""
     img = Image.new("RGB", maze.size, (255,255,255))
 
     path_length = len(solve_path)
 
-    #Draw maze
+    #Draw maze without path:
     for x in range(maze.size[0]):
         for y in range(maze.size[1]):
             if maze[(x, y)] != MazeTypes.ALREADY_VISITED:
@@ -51,7 +36,7 @@ def create_solved_maze_image(maze: MazeData, solve_path: list, hue_speed:float =
             else:
                 img.putpixel((x,y), MAZE_COLORS[MazeTypes.EMPTY])
 
-    #Draw path
+    #Draw path onto maze. Path color is a rainbow cycle - total number of cycles is equal to hue_speed
     for index, point in enumerate(reversed(solve_path)):
         hue =  (index * hue_speed/path_length) % 1
         raw_color = hsv_to_rgb(hue, 1.0, .5)
@@ -63,9 +48,11 @@ def create_solved_maze_image(maze: MazeData, solve_path: list, hue_speed:float =
     return img
 
 def display_solved_maze(maze: MazeData, solve_path: list, hue_speed:float = 0.0001):
+    """Given a solved maze and its solution path, creates a PIL image file and displays it using the default PNG viewer"""
     img = create_solved_maze_image(maze, solve_path, hue_speed)
     img.show()
 
 def export_solved_maze_image(file_name:str, maze: MazeData, solve_path: list, hue_speed:float = 0.0001):
+    """Given a solved maze and its solution path, creates a PIL image file and save it to a file"""
     img = create_solved_maze_image(maze, solve_path, hue_speed)
     img.save(file_name, "PNG")
