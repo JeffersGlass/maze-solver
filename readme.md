@@ -43,6 +43,8 @@ The `hue_speed` paramater affects how quickly the solution path cycles through a
 
 ### How the Solver Works
 
+This solver implements a basic [depth-first search](https://en.wikipedia.org/wiki/Depth-first_search). This isn't necessarily the most optimal for all mazes, or even most mazes, but it's quick and simple to implement and understand. Cwapping out the the [solve_maze()](https://github.com/JeffersGlass/maze-solver/blob/main/solvemaze.py#L10-L51) method for other strategies would be a good point for experimentation.
+
 #### Loading the Maze
 
 First, [load_maze()](https://github.com/JeffersGlass/maze-solver/blob/main/mazeio.py#L8-L23) uses [Pillow](https://pillow.readthedocs.io/en/stable/) to load an image file, and parse whether each pixel is a WALL or EMPTY based on its color (white = empty, black = wall). To gracefully handle JPEG images, any pixel with value (lightness) greater than 90% is considered empty.
