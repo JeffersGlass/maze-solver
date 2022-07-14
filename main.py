@@ -2,7 +2,7 @@ from mazeio import load_maze, display_solved_maze
 from solvemaze import export_maze, export_path, solve_maze, import_maze, import_path
 
 #The filename and extension for the maze file
-maze_name = 'worstmaze'
+maze_name = 'hardestmaze'
 extension = 'jpg'
 
 #Where to start and end the solve
