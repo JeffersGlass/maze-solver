@@ -44,7 +44,6 @@ def solve_maze(maze: dict, start: Sequence[int, int], end:Sequence[int, int]) ->
             if is_valid_position(check_position, maze.size):
                 if  maze[check_position] in  [MazeTypes.EMPTY, MazeTypes.END]:
                     new_position = PositionAndPrevious(check_position, current_position_and_previous)
-                    #print(f"Adding {new_position} to stack")
                     stack.append(new_position)
 
     print("COULD NOT FIND SOLUTION")
