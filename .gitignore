@@ -1,0 +1,12 @@
+#IDE Settings
+.vscode
+
+#Python Cache
+__pycache__
+
+#Cached Maze Solutions
+*.json
+*.pickle
+
+#Pip lock
+Pipfile.lock
