@@ -8,11 +8,10 @@ from positionAndPath import PositionAndPrevious
 
 
 
-def solve_maze(maze: dict) -> dict:
+def solve_maze(maze: dict, start, end) -> dict:
     stack = deque()
 
-    start = maze.start
-    end = maze.end
+    maze[end] = MazeTypes.END
 
     stack.append(PositionAndPrevious(start, None))    
 

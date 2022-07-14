@@ -5,7 +5,10 @@ from mazeData import MazeData
 from stores import MazeTypes, MAZE_COLORS
 from colorsys import hsv_to_rgb
 
-def load_maze(filename: str, start: Sequence[int, int], end: Sequence[int, int]):
+def load_maze(filename: str):
+    '''
+    Loads a maze from a given image file, along with its
+    '''
     image_data = Image.open(filename)
     size = ((d:= image_data.getbbox())[2], d[3])
 
@@ -14,14 +17,12 @@ def load_maze(filename: str, start: Sequence[int, int], end: Sequence[int, int])
     for x in range(size[0]):
         for y in range(size[1]):
             pixel_data = image_data.getpixel((x, y))
-            if sum(pixel_data) > 50*3 or (x, y) == start or (x, y) == end:
+            if sum(pixel_data) > 50*3:
                 maze_data[(x, y)] = MazeTypes.EMPTY
             else:
                 maze_data[(x, y)] = MazeTypes.WALL
 
-    maze_data[end] = MazeTypes.END
-
-    return MazeData(maze_data, size, tuple(start), tuple(end))
+    return MazeData(maze_data, size)
 
 def display_all_searched_maze(maze:MazeData, stack:Collection = None):
     if stack is not None: stack_coords = set([s.positoin for s in stack])
